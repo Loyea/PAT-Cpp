@@ -3,7 +3,7 @@
 
 using namespace std;
 
-//最直观的做法，不适用复杂的算法
+//最直观，用two_pointer解决超时问题
 int main() {
     long long n, p;
 
