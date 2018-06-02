@@ -1,14 +1,13 @@
-#include <cstdio>
+#include <stdio.h>
 #include <algorithm>
 
 using namespace std;
 
-const int max_n = 110;
 
-int n, origin[max_n], target[max_n], temp[max_n];
+int n, origin[110], duplicate[110], target[110];
 
-bool isSame(int a[], int b[], int length) {
-    for (int i = 0; i < length; i++) {
+bool isSame(int a[], int b[], int len) {
+    for (int i = 0; i < len; i++) {
         if (a[i] != b[i]) {
             return false;
         }
@@ -16,7 +15,7 @@ bool isSame(int a[], int b[], int length) {
     return true;
 }
 
-void print_array(int a[], int len) {
+void p_array(int a[], int len) {
     for (int i = 0; i < len; i++) {
         printf("%d", a[i]);
         if (i != len - 1) {
@@ -25,33 +24,26 @@ void print_array(int a[], int len) {
     }
 }
 
-int min(int a, int b) {
-    return a < b ? a : b;
-}
-
-
-bool merge_sort(int a[], int length) {
+bool merge_sort(int a[], int len) {
     bool flag = false;
-    for(int step = 2; step / 2 <= length; step *= 2){
-        for (int i = 0; i < length; i += step) {
-            sort(a + i, a + min(i + step, length));
+    for (int step = 2; step / 2 <= len; step *= 2) {
+        for (int i = 0; i < len; i += step) {
+            sort(a + i, a + min(i + step, len));
         }
         if (flag) {
             printf("Merge Sort\n");
-            print_array(a, length);
+            p_array(a, len);
             return true;
         } else {
-            if (isSame(a, target, length)) {
-                flag = true;
-            }
+            flag = isSame(a, target, len);
         }
     }
     return false;
 }
 
-bool insertion_sort(int a[], int length) {
+bool insertion_sort(int a[], int len) {
     bool flag = false;
-    for (int i = 1; i < length; i++) {
+    for (int i = 1; i < len; i++) {
         int temp = a[i];
         int j = i;
         while (j > 0 && a[j - 1] > temp) {
@@ -59,14 +51,13 @@ bool insertion_sort(int a[], int length) {
             j--;
         }
         a[j] = temp;
+
         if (flag) {
             printf("Insertion Sort\n");
-            print_array(a, length);
+            p_array(a, len);
             return true;
         } else {
-            if (isSame(a, target, length)) {
-                flag = true;
-            }
+            flag = isSame(a, target, len);
         }
     }
     return false;
@@ -77,18 +68,17 @@ int main() {
 
     for (int i = 0; i < n; i++) {
         scanf("%d", &origin[i]);
-        temp[i] = origin[i];
+        duplicate[i] = origin[i];
     }
 
     for (int i = 0; i < n; i++) {
         scanf("%d", &target[i]);
     }
 
-    if (insertion_sort(origin, n)) {
-        return 0;
+    if (!merge_sort(origin, n)) {
+        insertion_sort(duplicate, n);
     }
 
-    merge_sort(temp, n);
 
     return 0;
 }
