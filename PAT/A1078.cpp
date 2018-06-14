@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <cmath>
 
 const int maxn = 10010;
 
@@ -9,7 +10,8 @@ bool is_prime(int n) {
     if (n % 2 == 0 || n < 2) {
         return false;
     }
-    for (int i = 3; i * i <= n; i += 2) {
+    int sqr = (int) sqrt(1.0 * n);
+    for (int i = 3; i <= sqr; i += 2) {
         if (n % i == 0) {
             return false;
         }
