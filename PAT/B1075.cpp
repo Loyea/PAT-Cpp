@@ -1,82 +1,60 @@
 #include <cstdio>
 
-struct node{
-    int add;
-    int nn;
-    int value;
+struct Node {
+    int data;
+    int next;
 };
-
-int getAddByValue(int value, node nodes[], int m){
-    for (int i = 0; i < m; i++) {
-        if (nodes[i].value == value) {
-            return nodes[i].add;
-        }
-    }
-}
-
-node getNodeByAdd(int add, node nodes[], int m){
-    for (int i = 0; i < m; i++) {
-        if (nodes[i].add == add) {
-            return nodes[i];
-        }
-    }
-}
 
 int main() {
 
-    int n1, m, k;
+    Node nodes[100010];
+    int adds[100010];
 
-    int num = 0;
-    int values[100010] = {0};
+    int add1[100010], add2[100010], add3[100010];
+    int len1 = 0, len2 = 0, len3 = 0;
 
-    node nodes[100010];
+    int first, n, k;
+    scanf("%d%d%d", &first, &n, &k);
 
-    scanf("%d%d%d", &n1, &m, &k);
-    for (int i = 0; i < m; i++) {
-        scanf("%d%d%d", &nodes[i].add, &nodes[i].value, &nodes[i].nn);
-//        values[i] = nodes[i].value;
+    int add, data, next;
+    for (int i = 0; i < n; i++) {
+        scanf("%d%d%d", &add, &data, &next);
+        nodes[add].data = data;
+        nodes[add].next = next;
     }
 
-    int n = 0;
-    int v[100010];
-
-    //todo
-    for (int i = 0; i < m; i++) {
-        node temp = getNodeByAdd(n1, nodes, m);
-        v[n++] = temp.value;
-        n1 = temp.nn;
+    int p = first;
+    int list_length = 0;
+    while (p != -1) {
+        adds[list_length++] = p;
+        p = nodes[p].next;
     }
 
-    for (int i = 0; i < m; i++) {
-        if (v[i] < 0) {
-            values[num++] = v[i];
-        }
-    }
-    for (int i = 0; i < m; i++) {
-        if (v[i] >= 0 && v[i] <= k) {
-            values[num++] = v[i];
-        }
-    }
-    for (int i = 0; i < m; i++) {
-        if (v[i] > k) {
-            values[num++] = v[i];
-        }
-    }
-
-    for (int i = 0; i < m; i++) {
-        int add, next;
-        add = getAddByValue(values[i], nodes, m);
-        if (i != m - 1) {
-            next = getAddByValue(values[i + 1], nodes, m);
-        }
-
-        if (i != m - 1) {
-            printf("%05d %d %05d\n", add, values[i], next);
+    for (int i = 0; i < list_length; i++) {
+        int current_data = nodes[adds[i]].data;
+        if (current_data < 0) {
+            add1[len1++] = adds[i];
+        } else if (current_data <= k) {
+            add2[len2++] = adds[i];
         } else {
-            printf("%05d %d -1\n", add, values[i]);
+            add3[len3++] = adds[i];
         }
-
     }
+
+    for (int i = len1; i < len1 + len2; i++) {
+        add1[i] = add2[i - len1];
+    }
+
+    for (int i = len1 + len2; i < len1 + len2 + len3; i++) {
+        add1[i] = add3[i - len1 - len2];
+    }
+
+    for (int i = 0; i < list_length - 1; i++) {
+        printf("%05d %d %05d\n", add1[i], nodes[add1[i]].data, add1[i + 1]);
+    }
+    printf("%05d %d %d\n", add1[list_length - 1], nodes[add1[list_length - 1]].data, -1);
+
+    //坑点参考1025
 
     return 0;
 }
