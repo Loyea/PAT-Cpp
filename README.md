@@ -1,5 +1,5 @@
 ## How to run these codes in CLion?
-To run single C/C++ file, you need install `C/C++ Single File Execution` plugin in CLion Preferences - Plugins.
+To run single C/C++ file, you need install [`C/C++ Single File Execution`](https://plugins.jetbrains.com/plugin/8352-c-c--single-file-execution) plugin in CLion Preferences - Plugins.
 
 When first time you open this project, if `cmake-build-debug` directory not exists, you may need to go to `File` menu
 and click `Reload CMake Project` option to make CLion create `cmake-build-debug` directory.
