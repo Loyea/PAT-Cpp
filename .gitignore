@@ -1,0 +1,8 @@
+# Intellij project files
+.idea/
+
+# CMake
+cmake-build-*/
+
+# OS relative
+.DS_Store
