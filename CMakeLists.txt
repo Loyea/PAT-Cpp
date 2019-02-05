@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 project(PAT-Cpp)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 98)
 
 add_executable(main main.cpp)
 add_executable(Test Test.cpp)
